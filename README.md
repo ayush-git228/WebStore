@@ -1,8 +1,6 @@
-A mern stack web application for online store.
+A mern stack web application.
 
-Want to make it a fitness/health online store.
+Want to make it a unique online store.
 
 Room for ideas.
-
-Facing Issues Regarding SignIn, Register Component.
 
