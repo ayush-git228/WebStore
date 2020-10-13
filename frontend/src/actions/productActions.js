@@ -16,7 +16,7 @@ const listProducts = (
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
     const { data } = await axios.get(
-      'http://127.0.0.1/api/products?category=' +
+      'http://127.0.0.1:5000/api/products?category=' +
         category +
         '&searchKeyword=' +
         searchKeyword +
@@ -36,7 +36,7 @@ const saveProduct = (product) => async (dispatch, getState) => {
       userSignin: { userInfo },
     } = getState();
     if (!product._id) {
-      const { data } = await Axios.post('/api/products', product, {
+      const { data } = await Axios.post('http://127.0.0.1:5000/api/products', product, {
         headers: {
           Authorization: 'Bearer ' + userInfo.token,
         },
@@ -44,7 +44,7 @@ const saveProduct = (product) => async (dispatch, getState) => {
       dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
     } else {
       const { data } = await Axios.put(
-        '/api/products/' + product._id,
+        'http://127.0.0.1:5000/api/products/' + product._id,
         product,
         {
           headers: {
@@ -62,7 +62,7 @@ const saveProduct = (product) => async (dispatch, getState) => {
 const detailsProduct = (productId) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
-    const { data } = await axios.get('/api/products/' + productId);
+    const { data } = await axios.get('http://127.0.0.1:5000/api/products/' + productId);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.message });
@@ -75,11 +75,11 @@ const deleteProduct = (productId) => async (dispatch, getState) => {
       userSignin: { userInfo },
     } = getState();
     dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
-    const { data } = await axios.delete('/api/products/' + productId, {
+    const { data } = await axios.delete('https://127.0.0.1:5000/api/products/' + productId /*, {
       headers: {
         Authorization: 'Bearer ' + userInfo.token,
       },
-    });
+    }  */);
     dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
   } catch (error) {
     dispatch({ type: PRODUCT_DELETE_FAIL, payload: error.message });
