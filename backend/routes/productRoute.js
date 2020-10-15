@@ -15,12 +15,14 @@ router.get('/', async (req, res) => {
         },
       }
     : {};
-  const sortOrder = req.query.sortOrder
+  const sortOrder = () => req.query.sortOrder
     ? req.query.sortOrder === 'lowest'
       ? { price: 1 }
       : { price: -1 }
     : { _id: -1 };
-  const products = await data.products.find({ ...category, ...searchKeyword }).sort(
+  const products = await data.products.filter( product => product.category == category.category )
+  .map( product => { return {...product, ...searchKeyword} } )
+  .sort(
     sortOrder
   );
   res.send(products);
