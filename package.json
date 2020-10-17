@@ -6,6 +6,7 @@
   "dependencies": {
     "aws-sdk": "^2.702.0",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
@@ -15,12 +16,16 @@
     "request": "^2.88.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.0",
+    "@babel/node": "^7.10.5",
     "nodemon": "^2.0.2"
   },
   "scripts": {
     "start": "nodemon --watch backend --exec babel-node backend/server.js",
     "build": "rm -rf dist && babel backend -d dist",
-    "heroku-postbuild": "npm run build && cd frontend && npm install && npm run build"
+    "heroku-postbuild": "npm run build && cd frontend && npm install && npm run build",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run start\" \"npm run client\""
   },
   "repository": {
     "type": "git",

@@ -2,10 +2,12 @@ const express = require('express');
 const Product = require('../models/productModel');
 const { isAuth, isAdmin } = require('../util');
 const data = require("../data");
+const cors = require("../middleware/cors")
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+// added cors middleware
+router.get('/', cors, async (req, res) => {
   const category = req.query.category ? { category: req.query.category } : {};
   const searchKeyword = req.query.searchKeyword
     ? {
@@ -15,12 +17,17 @@ router.get('/', async (req, res) => {
         },
       }
     : {};
-  const sortOrder = req.query.sortOrder
+  const sortOrder = () => req.query.sortOrder
     ? req.query.sortOrder === 'lowest'
       ? { price: 1 }
       : { price: -1 }
     : { _id: -1 };
-  const products = await data.products.find({ ...category, ...searchKeyword }).sort(
+
+  // find() only returns first item found, and also takes a callback function as arg
+  // here it made more sense to me to filter than make adjustments to them with map()
+  const products = await data.products.filter( product => product.category == category.category )
+  .map( product => { return {...product, ...searchKeyword} } )
+  .sort(
     sortOrder
   );
   res.send(products);
