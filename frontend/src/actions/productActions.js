@@ -62,7 +62,9 @@ const saveProduct = (product) => async (dispatch, getState) => {
 const detailsProduct = (productId) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
-    const { data } = await axios.get('http://127.0.0.1:5000/api/products/' + productId);
+    console.log(productId);
+    const {data}  = await axios.get('http://127.0.0.1:5000/api/products/' + productId);
+    console.log(data);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.message });
@@ -75,11 +77,11 @@ const deleteProduct = (productId) => async (dispatch, getState) => {
       userSignin: { userInfo },
     } = getState();
     dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
-    const { data } = await axios.delete('https://127.0.0.1:5000/api/products/' + productId /*, {
+    const { data } = await axios.delete('https://127.0.0.1:5000/api/products/' + productId , {
       headers: {
         Authorization: 'Bearer ' + userInfo.token,
       },
-    }  */);
+    } );
     dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success: true });
   } catch (error) {
     dispatch({ type: PRODUCT_DELETE_FAIL, payload: error.message });
@@ -111,9 +113,5 @@ const saveProductReview = (productId, review) => async (dispatch, getState) => {
 };
 
 export {
-  listProducts,
-  detailsProduct,
-  saveProduct,
-  deleteProduct,
-  saveProductReview,
+  listProducts, detailsProduct, saveProduct, deleteProduct, saveProductReview,
 };
