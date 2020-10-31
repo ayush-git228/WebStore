@@ -65,10 +65,10 @@ router.post('/register', async (req, res) => {
 router.post('/createadmin', async (req, res) => {
   try {
     const user = new User({
-      name: 'Ayush',
-      email: 'admin@gmail.com',
-      password: '1234',
-      isAdmin: true,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      isAdmin: req.body.isAdmin,
     });
     const newUser = await user.save();
     res.send(newUser);

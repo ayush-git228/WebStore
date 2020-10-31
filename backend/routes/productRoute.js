@@ -1,31 +1,15 @@
 const express = require('express');
 
 const Product = require('../models/productModel');
-const Review = require("../models/productModel");
 
 const { isAuth, isAdmin } = require('../util');
-const data = require("../data");
-const cors = require("../middleware/cors")
+
 const app = express();
 app.use(express.json());
 const router = express.Router();
-/*
-router.post("/",cors, async(req,res)=>{
-  const product = new Product(req.body);
-  console.log(product);
-  try{
-    await product.save();
-    res.status(201).send(product);
-    console.log(product);  
-  }
-  catch(err){
-    console.log("Can't add product");
-    res.status(400).send(err);
-  }
-})
-*/
+
 // added cors middleware
-router.get('/', cors, async (req, res) => {
+router.get('/', async (req, res) => {
   const category = req.query.category ? { category: req.query.category } : {};
   const searchKeyword = req.query.searchKeyword
     ? {
@@ -41,38 +25,35 @@ router.get('/', cors, async (req, res) => {
       : { price: -1 }
     : { _id: -1 };
 
-  // find() only returns first item found, and also takes a callback function as arg
-  // here it made more sense to take filter than make adjustments to them with map()
-  
-  /*  const products = await Product.fi(product => product.category == category.category )    // ERROR CHANCE HERE
-      .map( product => { return {...product, ...searchKeyword} } )
-      .sort(
-        sortOrder
-      );
-      */
-      const products =  await Product.find({ ...category, ...searchKeyword }).sort( sortOrder );
-      console.log(products)
-      res.send(products);
-    /*
-    catch{
-    console.log("Can't Find Product");
-  } */
+  const products =  await Product.find({ ...category, ...searchKeyword }).sort( sortOrder );
+  console.log(products)
+  res.send(products);
+
 });
 
-router.get('/:id',cors, async (req, res) => {
+router.get('/:id', async (req, res) => {
   const product =  await Product.findOne({_id:req.params.id});
-  /*if (!product) {
+  if (!product) {
     return;
-  } */
-  res.send(product);
-  console.log(product);
-  //} else {
-   // console.log("Ooops Problem here.")
-   // res.status(404).send({ message: 'Product Not Found.' });
-  //}
+  } 
+  else if(product)
+  {
+    res.send(product);
+    console.log(product);
+  }
+  
+  else {
+   console.log("Ooops Problem here.")
+   res.status(404).send({ message: 'Product Not Found.' });
+  }
 });
 
-router.post('/:id/reviews', isAuth, async (req, res) => {
+router.get('/', async (req, res) => {
+  const categories = await Product.find().distinct('category');
+  res.send(categories);
+});
+
+router.post('/:id/reviews', async (req, res) => {
   const product = await Product.findById(req.params.id);
   if (product) {
     const review = {
