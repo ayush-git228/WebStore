@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { saveProduct, listProducts, deleteProduct } from '../actions/productActions';
-import data from "../data";
 
 function ProductsScreen(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -44,6 +43,15 @@ function ProductsScreen(props) {
   }, [successSave, successDelete]);
 
   const openModal = (product) => {
+    if(loading)
+    {
+      return "Loading...";
+    }
+    else if(error)
+    {
+      return error;
+    }
+
     setModalVisible(true);
     setId(product._id);
     setName(product.name);
@@ -54,24 +62,24 @@ function ProductsScreen(props) {
     setCategory(product.category);
     setCountInStock(product.countInStock);
   };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      saveProduct({
-        _id: id,
-        name,
-        price,
-        image,
-        brand,
-        category,
-        countInStock,
-        description,
-      })
-    );
+    dispatch( saveProduct({  _id: id, name, price, image, brand, category, countInStock, description, }));
   };
+  
   const deleteHandler = (product) => {
+    if(loadingDelete)
+    {
+      return "Loading...";
+    }
+    else if(errorDelete)
+    {
+      return error;
+    }
     dispatch(deleteProduct(product._id));
   };
+
   const uploadFileHandler = (e) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData();
@@ -108,7 +116,7 @@ function ProductsScreen(props) {
                 <h2>Create Product</h2>
               </li>
               <li>
-                {loadingSave && <div>Loading...</div>}
+                {loadingSave && <div className="fa fa-spinner fa-3x fa-spin primary">Loading...</div>}
                 {errorSave && <div>{errorSave}</div>}
               </li>
 
@@ -119,6 +127,7 @@ function ProductsScreen(props) {
                   name="name"
                   value={name}
                   id="name"
+                  required
                   onChange={(e) => setName(e.target.value)}
                 ></input>
               </li>
@@ -129,6 +138,7 @@ function ProductsScreen(props) {
                   name="price"
                   value={price}
                   id="price"
+                  required
                   onChange={(e) => setPrice(e.target.value)}
                 ></input>
               </li>
@@ -139,6 +149,7 @@ function ProductsScreen(props) {
                   name="image"
                   value={image}
                   id="image"
+                  required
                   onChange={(e) => setImage(e.target.value)}
                 ></input>
                 <input type="file" onChange={uploadFileHandler}></input>
@@ -151,6 +162,7 @@ function ProductsScreen(props) {
                   name="brand"
                   value={brand}
                   id="brand"
+                  required
                   onChange={(e) => setBrand(e.target.value)}
                 ></input>
               </li>
@@ -161,6 +173,7 @@ function ProductsScreen(props) {
                   name="countInStock"
                   value={countInStock}
                   id="countInStock"
+                  required
                   onChange={(e) => setCountInStock(e.target.value)}
                 ></input>
               </li>
@@ -171,6 +184,7 @@ function ProductsScreen(props) {
                   name="category"
                   value={category}
                   id="category"
+                  required
                   onChange={(e) => setCategory(e.target.value)}
                 ></input>
               </li>
@@ -180,6 +194,7 @@ function ProductsScreen(props) {
                   name="description"
                   value={description}
                   id="description"
+                  required
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </li>
@@ -213,7 +228,7 @@ function ProductsScreen(props) {
             </tr>
           </thead>
           <tbody>
-            {data.products.map((product) => (
+            {products.map((product) => (
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.name}</td>

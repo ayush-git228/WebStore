@@ -84,7 +84,7 @@ function ProfileScreen(props) {
     </div>
     <div className="profile-orders content-margined">
       {
-        loadingOrders ? <div>Loading...</div> :
+        loadingOrders ? <div className="fa fa-spinner fa-3x fa-spin primary">Loading...</div> :
           errorOrders ? <div>{errorOrders} </div> :
             <table className="table">
               <thead>

@@ -5,11 +5,12 @@ function PaypalButton(props) {
   const [sdkReady, setSdkReady] = useState(false);
 
   const addPaypalSdk = async () => {
-    const result = await axios.get("/api/config/paypal");
-    const clientID = result.data;
+    const clientID = await axios.get("http://127.0.0.1:5000/api/config/paypal");
+    const data = clientID.data;
     const script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = 'https://www.paypal.com/sdk/js?client-id=' + clientID;
+    script.src = 'https://www.paypal.com/sdk/js?client-id=' + data;
+
     script.async = true;
     script.onload = () => {
       setSdkReady(true);
@@ -21,7 +22,7 @@ function PaypalButton(props) {
     purchase_units: [
       {
         amount: {
-          currency_code: 'USD',
+          currency_code: 'INR',
           value: props.amount
         }
       }

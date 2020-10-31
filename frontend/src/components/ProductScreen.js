@@ -12,7 +12,7 @@ function ProductScreen(props) {
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const productDetails = useSelector((state) => state.productDetails);
-  const { product, loading, error } = productDetails;
+  const { loading, product, error } = productDetails;
   const productReviewSave = useSelector((state) => state.productReviewSave);
   const { success: productSaveSuccess } = productReviewSave;
   const dispatch = useDispatch();
@@ -43,6 +43,7 @@ function ProductScreen(props) {
   const handleAddToCart = () => {
     props.history.push('/cart/' + props.match.params.id + '?qty=' + qty);
   };
+  console.log(product);
 
   return (
     <div>
@@ -50,11 +51,11 @@ function ProductScreen(props) {
         <Link to="/">Back to result</Link>
       </div>
       {loading ? (
-        <div>Loading...</div>
+        <div className="fa fa-spinner fa-3x fa-spin primary">Loading...</div>
       ) : error ? (
         <div>{error} </div>
-      ) : (
-        <>
+      ) :(
+          <>
           <div className="details">
             <div className="details-image">
               <img src={product.image} alt="product"></img>
@@ -73,7 +74,7 @@ function ProductScreen(props) {
                   </a>
                 </li>
                 <li>
-                  Price: <b>${product.price}</b>
+                  Price: <b>₹{product.price}</b>
                 </li>
                 <li>
                   Description:
@@ -118,6 +119,7 @@ function ProductScreen(props) {
           </div>
           <div className="content-margined">
             <h2>Reviews</h2>
+            
             {!product.reviews.length && <div>There is no review</div>}
             <ul className="review" id="reviews">
               {product.reviews.map((review) => (

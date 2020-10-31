@@ -25,16 +25,22 @@ function RegisterScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(register(name, email, password));
+    if(password === rePassword)
+    {
+      dispatch(register(name, email, password));
+    }
+    else{
+      alert("Enter correct passwords");
+    }
   }
   return <div className="form">
-    <form /* onSubmit={submitHandler} */ >
+    <form  onSubmit={submitHandler} >
       <ul className="form-container">
         <li>
           <h2>Create Account</h2>
         </li>
         <li>
-          {loading && <div>Loading...</div>}
+          {loading && <div className="fa fa-spinner fa-3x fa-spin primary">Loading...</div>}
           {error && <div>{error}</div>}
         </li>
         <li>

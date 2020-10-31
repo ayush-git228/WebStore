@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import Rating from './Rating';
@@ -30,31 +29,31 @@ function HomeScreen(props) {
   };
 
   return (
-    <><div id="WAButton"></div>
-
+    <>
       {category && <h2>{category}</h2>}
-
       <ul className="filter">
+        Filter {" "}
         <li>
           <form onSubmit={submitHandler}>
             <input
               name="searchKeyword"
               onChange={(e) => setSearchKeyword(e.target.value)}
             />
-            <button type="submit">Search</button>
+            <button type="submit"><i className="fa fa-search"></i></button>
           </form>
         </li>
+
         <li>
-          Sort By{' '}
+          {"  "}
           <select name="sortOrder" onChange={sortHandler}>
             <option value="">Newest</option>
-            <option value="lowest">Lowest</option>
-            <option value="highest">Highest</option>
+            <option value="lowest">Low price</option>
+            <option value="highest">High price</option>
           </select>
         </li>
       </ul>
       {loading ? (
-        <div>Loading...</div>
+        <div className="fa fa-spinner fa-3x fa-spin primary">Loading...</div>
       ) : error ? (
         <div>{error}</div>
       ) : (
@@ -73,7 +72,7 @@ function HomeScreen(props) {
                   <Link to={'/product/' + product._id}>{product.name}</Link>
                 </div>
                 <div className="product-brand">{product.brand}</div>
-                <div className="product-price">${product.price}</div>
+                <div className="product-price">₹{product.price}</div>
                 <div className="product-rating">
                   <Rating
                     value={product.rating}

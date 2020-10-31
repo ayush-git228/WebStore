@@ -32,7 +32,7 @@ function SigninScreen(props) {
           <h2>Sign In</h2>
         </li>
         <li>
-          {loading && <div>Loading...</div>}
+          {loading && <div className="fa fa-spinner fa-3x fa-spin primary">Loading...</div>}
           {error && <div>{error}</div>}
         </li>
         <li>

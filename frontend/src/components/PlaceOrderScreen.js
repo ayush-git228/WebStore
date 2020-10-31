@@ -7,7 +7,7 @@ function PlaceOrderScreen(props) {
 
   const cart = useSelector(state => state.cart);
   const orderCreate = useSelector(state => state.orderCreate);
-  const { loading, success, error, order } = orderCreate;
+  const { /*loading,*/ success,/* error,*/ order } = orderCreate;
 
   const { cartItems, shipping, payment } = cart;
   if (!shipping.address) {
@@ -17,8 +17,8 @@ function PlaceOrderScreen(props) {
   }
   const itemsPrice = cartItems.reduce((a, c) => a + c.price * c.qty, 0);
   const shippingPrice = itemsPrice > 100 ? 0 : 10;
-  const taxPrice = 0.15 * itemsPrice;
-  const totalPrice = itemsPrice + shippingPrice + taxPrice;
+  const GST = 0.1 * itemsPrice;
+  const totalPrice = itemsPrice + shippingPrice + GST;
 
   const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ function PlaceOrderScreen(props) {
     // create an order
     dispatch(createOrder({
       orderItems: cartItems, shipping, payment, itemsPrice, shippingPrice,
-      taxPrice, totalPrice
+      GST, totalPrice
     }));
   }
   useEffect(() => {
@@ -88,14 +88,13 @@ function PlaceOrderScreen(props) {
                       </div>
                     </div>
                     <div className="cart-price">
-                      ${item.price}
+                      ₹{item.price}
                     </div>
                   </li>
                 )
             }
           </ul>
         </div>
-
       
       </div>
       <div className="placeorder-action">
@@ -108,23 +107,21 @@ function PlaceOrderScreen(props) {
           </li>
           <li>
             <div>Items</div>
-            <div>${itemsPrice}</div>
+            <div>₹{itemsPrice}</div>
           </li>
           <li>
             <div>Shipping</div>
-            <div>${shippingPrice}</div>
+            <div>₹{shippingPrice}</div>
           </li>
           <li>
             <div>Tax</div>
-            <div>${taxPrice}</div>
+            <div>₹{GST}</div>
           </li>
           <li>
             <div>Order Total</div>
-            <div>${totalPrice}</div>
+            <div>₹{totalPrice}</div>
           </li>
         </ul>
-
-
 
       </div>
 
