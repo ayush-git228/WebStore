@@ -111,7 +111,7 @@ function App() {
 
         <footer className="footer">
           <a href="https://github.com/ayush-git228" className="github-icon"><i className="fa fa-github"></i></a> 
-          <a href="https://linkedin.com/" className="linkedin-icon"><i className="fa fa-linkedin"></i></a>
+          <a href="https://www.linkedin.com/in/ayush-gupta-3909a7157/" className="linkedin-icon"><i className="fa fa-linkedin"></i></a>
           <a href="https://www.instagram.com/ayush.gupta228" className="instagram-icon"><i className="fa fa-instagram"></i></a>
           <div id="WAButton"></div>
         </footer>
