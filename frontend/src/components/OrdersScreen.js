@@ -62,7 +62,7 @@ function OrdersScreen(props) {
               <td>{order._id}</td>
               <td>{order.createdAt.substring(0,10)}</td>
               <td>{order.totalPrice.toFixed(2)}</td>
-              <td>{order.user.name}</td>
+              <td>{order.user ? order.user.name : "Not known"}</td>
               <td>{order.isPaid ? "Yes" : "No" }</td>
               <td>{order.isPaid ? order.paidAt.substring(0, 10) : "Not known" }</td>
               <td>{order.isDelivered ? "Yes" : "No" }</td>
