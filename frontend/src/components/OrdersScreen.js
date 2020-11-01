@@ -60,8 +60,8 @@ function OrdersScreen(props) {
           <tbody>
             {orders.map(order => (<tr key={order._id}>
               <td>{order._id}</td>
-              <td>{order.createdAt.substring(0,10)}</td>
-              <td>{order.totalPrice.toFixed(2)}</td>
+              <td>{order.createdAt ? order.createdAt.substring(0,10) : "Not known"}</td>
+              <td>{order.totalPrice ? order.totalPrice.toFixed(2) : "Not Calculated"}</td>
               <td>{order.user ? order.user.name : "Not known"}</td>
               <td>{order.isPaid ? "Yes" : "No" }</td>
               <td>{order.isPaid ? order.paidAt.substring(0, 10) : "Not known" }</td>
