@@ -54,7 +54,7 @@ function SigninScreen(props) {
           New to Tracker?
         </li>
         <li>
-          <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect} className="button secondary text-center" >Create your Tracker account</Link>
+          <Link to={redirect === "/" ? "register" : "register?redirect=" + redirect} className="button secondary text-center" >Create your WebStore account</Link>
         </li>
       </ul>
     </form>
