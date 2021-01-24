@@ -11,7 +11,7 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-const prodctSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   image: { type: String, required: true },
   brand: { type: String, required: true },
@@ -24,7 +24,7 @@ const prodctSchema = new mongoose.Schema({
   reviews: [reviewSchema],
 });
 
-const Product = mongoose.model('Product', prodctSchema);
+const Product = mongoose.model('Product', productSchema);
 const Review = mongoose.model("Review", reviewSchema);
 
 module.exports = Product, Review;
