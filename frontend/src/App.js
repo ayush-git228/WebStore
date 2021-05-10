@@ -82,11 +82,9 @@ function App() {
 
           <ul className="categories">
             {products.map((product) => (
-
               <li key={product._id}>
               <Link to={"/category/"+ product.category}>{product.category}</Link> 
               </li>
-            
             ))}
           </ul>
 
