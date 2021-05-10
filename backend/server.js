@@ -47,9 +47,3 @@ const server = app.listen(process.env.PORT || 5000, () => {
 
 
 
-// ---------------------HEROKU ERROR-------------------
-/*
-app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../frontend/public/index.html`));
-});
-*/
