@@ -36,6 +36,7 @@ function RegisterScreen(props) {
   return <div className="form">
     <form  onSubmit={submitHandler} >
       <ul className="form-container">
+        
         <li>
           <h2>Create Account</h2>
         </li>
@@ -73,7 +74,6 @@ function RegisterScreen(props) {
         <li>
           Already have an account?
           <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} className="button secondary text-center" >Back to Sign In</Link>
-
         </li>
 
       </ul>
