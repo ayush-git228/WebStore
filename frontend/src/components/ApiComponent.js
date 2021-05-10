@@ -1,7 +1,5 @@
 import React from "react";
 function Api(){
-
-
     const {data} = fetch("https://human.p.rapidapi.com/human/body_fat/daily/%7Bdate%7D", {
         "method": "GET",
         "headers": {
@@ -16,11 +14,11 @@ function Api(){
     .catch(err => {
         console.log(err);
     });
-      return(
-           <div>
-               {console.log(data)}
-           </div>
+    return(
+         <div>
+             {console.log(data)}
+         </div>
        )
-   }
+  }
    
-   export default Api;
+  export default Api;
